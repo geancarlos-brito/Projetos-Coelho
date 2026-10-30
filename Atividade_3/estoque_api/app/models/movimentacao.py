@@ -1,9 +1,13 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, ForeignKey, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
+
+if TYPE_CHECKING:
+    from app.models.produto import Produto
 
 
 class Movimentacao(Base):
@@ -11,7 +15,7 @@ class Movimentacao(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     produto_id: Mapped[int] = mapped_column(ForeignKey("produtos.id"))
-    tipo: Mapped[str] = mapped_column(String(10))  # "entrada" ou "saida"
+    tipo: Mapped[str] = mapped_column(String(10))
     quantidade: Mapped[int]
     motivo: Mapped[str | None] = mapped_column(String(200))
     criado_em: Mapped[datetime] = mapped_column(

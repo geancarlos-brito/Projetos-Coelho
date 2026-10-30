@@ -12,7 +12,6 @@ class MovimentacaoCreate(BaseModel):
 
 
 class MovimentacaoUpdate(BaseModel):
-    # Só o motivo pode ser corrigido; tipo e quantidade alterariam o saldo.
     motivo: str | None = Field(default=None, max_length=200)
 
 

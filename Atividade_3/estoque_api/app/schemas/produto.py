@@ -10,7 +10,6 @@ class ProdutoCreate(BaseModel):
 
 
 class ProdutoUpdate(BaseModel):
-    # A quantidade não é editável aqui: só muda por movimentações.
     nome: str | None = Field(default=None, min_length=2, max_length=120)
     sku: str | None = Field(default=None, min_length=2, max_length=40)
     preco: float | None = Field(default=None, gt=0)

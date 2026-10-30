@@ -33,6 +33,14 @@ alembic/      migrações
 ```
 
 ## Como rodar
+
+Na pasta `estoque_api`, crie um arquivo `.env` com a URL do banco:
+```env
+DATABASE_URL=sqlite:///./estoque.db
+```
+Essa URL já é o padrão caso o arquivo não exista. Para usar outro banco,
+substitua o valor por uma URL compatível com o SQLAlchemy.
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate

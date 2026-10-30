@@ -4,7 +4,7 @@ from app.routers import categorias, movimentacoes, produtos
 
 app = FastAPI(
     title="Gerenciador de Estoque",
-    description="Controle de categorias, produtos e movimentações de estoque.",
+    description="vasco 3x1 hoje.",
     version="1.0.0",
 )
 

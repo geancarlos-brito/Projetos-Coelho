@@ -1,8 +1,10 @@
 from sqlalchemy import create_engine, event
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.orm import DeclarativeBase, Session
 
-from app.core.config import DATABASE_URL
+from app.core.config import Settings
 
+
+DATABASE_URL = Settings().DATABASE_URL
 is_sqlite = DATABASE_URL.startswith("sqlite")
 
 engine = create_engine(
@@ -11,23 +13,20 @@ engine = create_engine(
 )
 
 if is_sqlite:
-    # O SQLite não respeita chaves estrangeiras por padrão.
     @event.listens_for(engine, "connect")
-    def _ativar_fk(dbapi_connection, _):
+    def _enable_sqlite_foreign_keys(dbapi_connection, _):
         cursor = dbapi_connection.cursor()
         cursor.execute("PRAGMA foreign_keys=ON")
         cursor.close()
-
-SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
 
 class Base(DeclarativeBase):
     pass
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+def get_session():
+    with Session(engine) as session:
+        yield session
+
+
+get_db = get_session

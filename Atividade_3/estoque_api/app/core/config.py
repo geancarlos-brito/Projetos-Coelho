@@ -1,3 +1,13 @@
-import os
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./estoque.db")
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+    )
+
+    DATABASE_URL: str = ""
+
+
+DATABASE_URL = Settings().DATABASE_URL
